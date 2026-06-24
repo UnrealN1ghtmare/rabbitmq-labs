@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Send Message</title>
+</head>
+<body>
+
+<h1>Send Message</h1>
+
+<form id="messageForm">
+    <input
+        type="text"
+        id="message"
+        placeholder="Enter message"
+        required>
+
+    <button type="submit">
+        Submit
+    </button>
+</form>
+
+<p id="status"></p>
+
+<script>
+document
+    .getElementById('messageForm')
+    .addEventListener('submit', async (e) => {
+
+        e.preventDefault();
+
+        const message =
+            document.getElementById('message').value;
+
+        const response =
+            await fetch('/send', {
+                method: 'POST',
+                headers: {
+                    'Content-Type':
+                    'application/json'
+                },
+                body: JSON.stringify({
+                    message
+                })
+            });
+
+        const result =
+            await response.text();
+
+        document
+            .getElementById('status')
+            .textContent = result;
+    });
+</script>
+
+</body>
+</html>

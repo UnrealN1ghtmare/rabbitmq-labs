@@ -1,0 +1,38 @@
+services:
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+
+  service1:
+    build: ./service1
+
+    ports:
+      - "3000:3000"
+
+    environment:
+      RABBITMQ_URL: ${RABBITMQ_URL}
+      QUEUE_NAME: ${QUEUE_NAME}
+
+    depends_on:
+      - rabbitmq
+
+  service2:
+    build: ./service2
+
+    ports:
+      - "3001"
+
+    environment:
+      RABBITMQ_URL: ${RABBITMQ_URL}
+      QUEUE_NAME: ${QUEUE_NAME}
+
+    depends_on:
+      - rabbitmq
+
+    deploy:
+      replicas: 2
