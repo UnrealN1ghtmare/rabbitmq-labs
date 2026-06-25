@@ -137,7 +137,3 @@ Default port:
 - Minikube
 
 ---
-
-## Author
-
-Stanislav Babenko
